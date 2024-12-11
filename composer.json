@@ -1,0 +1,22 @@
+{
+    "name": "mtde/sso",
+    "description": "The Ministry of Communications and Digital Economy Sso",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Mtde\\Sso\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "The Ministry of Communications and Digital Economy"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": "^8.2",
+        "laravel/ui": "^4.6",
+        "mews/captcha": "^3.4"
+    }
+}
