@@ -16,7 +16,7 @@ class MtdeSsoServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
-        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+        $this->loadMigrationsFrom(__DIR__ . '/../migrations');
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'pack');
         $this->loadTranslationsFrom(__DIR__.'/../lang','pack');
 
