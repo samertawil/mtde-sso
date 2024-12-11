@@ -15,10 +15,10 @@ class MtdeSsoServiceProvider extends ServiceProvider
  
     public function boot(): void
     {
-        $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
-        $this->loadMigrationsFrom(__DIR__ . '/../migrations');
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'pack');
-        $this->loadTranslationsFrom(__DIR__.'/../lang','pack');
+        // $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
+        // $this->loadMigrationsFrom(__DIR__ . '/../migrations');
+        // $this->loadViewsFrom(__DIR__ . '/../resources/views', 'pack');
+        // $this->loadTranslationsFrom(__DIR__.'/../lang','pack');
 
 
         $this->publishes(
@@ -49,7 +49,7 @@ class MtdeSsoServiceProvider extends ServiceProvider
         ],'assets');
     
         $this->publishes([
-            __DIR__.'/Http/Controllers/pack_Auth' => app_path('/Http/Controllers/pack_Auth'),
+            __DIR__.'/Http/Controllers/packAuth' => app_path('/Http/Controllers/packAuth'),
         ],'controllers');
         
         $this->publishes([

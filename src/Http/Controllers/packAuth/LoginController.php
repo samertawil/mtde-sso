@@ -1,6 +1,6 @@
 <?php
 
-namespace  mtde\sso\Http\Controllers\pack_Auth;
+namespace  mtde\sso\Http\Controllers\packAuth;
 
 
 use Illuminate\Http\Request;

@@ -2,8 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use mtde\sso\Http\Middleware\CheckIdc;
-use mtde\sso\Http\Controllers\pack_Auth\LoginController;
-use mtde\sso\Http\Controllers\pack_Auth\RegisterController;
+use mtde\sso\Http\Controllers\packAuth\LoginController;
+use mtde\sso\Http\Controllers\packAuth\RegisterController;
  
 // use App\Http\Controllers\Auth\RegisterController;
 // use App\Http\Controllers\ChangePasswordController;
