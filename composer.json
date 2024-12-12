@@ -5,7 +5,7 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Mtde\\Sso\\": "src/"
+            "mtde\\sso\\": "src/"
         }
     },
     "authors": [
