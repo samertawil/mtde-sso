@@ -16,7 +16,7 @@ class ChkIdcRequest extends FormRequest
     public function rules()
     {
          return [
-         'idc'=>[ 'required','exists:ssn_login_ques_tb,idc','unique:accounts,idc'],
+         'idc'=>[ 'required',],
          
         ];
 

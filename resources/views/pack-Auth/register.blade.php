@@ -6,16 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="google" content="notranslate">
-    <link rel="stylesheet" href="{{asset('pack-assets/css/bootstrap.rtl.css')}}">
-    <link rel="stylesheet" href="{{asset('pack-assets/css/main.css')}}">
+    <link rel="stylesheet" href="{{ asset('pack-assets/css/bootstrap.rtl.css') }}">
+    <link rel="stylesheet" href="{{ asset('pack-assets/css/main.css') }}">
     <title>تسجيل حساب</title>
 </head>
 
 
 <body>
-
-    @include('pack::pack-Layouts._alert-session')
-
 
 
     <div class="d-flex mt-4" style="height: 600px;">
@@ -23,20 +20,28 @@
             <div class="row justify-content-center">
                 <div class="col-md-8">
                     <div class="card">
+
+                    
                         <div class="card-header">تسجيل حساب جديد</div>
 
+                        @include('pack::pack-layouts._error-form')
+                        
+                        @include('pack::pack-layouts._alert-session')
+
                         <div class="card-body">
-                            <form method="POST" action="{{ route('register.store', $citizen->idc) }}">
+                         
+                            <form method="POST" action="{{ route('register.store', $idc) }}">
                                 @csrf
 
                                 <div class="row mb-3">
                                     <label for="idc"
-                                        class="col-md-4 col-form-label text-md-end">{{ __('pack::pack.idc') }}</label>
+                                        class="col-md-4 col-form-label text-md-end required">{{ __('pack::pack.idc') }}</label>
 
                                     <div class="col-md-6">
                                         <input id="idc" type="number"
                                             class="form-control @error('idc') is-invalid @enderror" name="idc"
-                                            value="{{ old('idc', $citizen->idc) }}" autocomplete="idc" disabled>
+                                           value="{{ old('idc', $idc) }}" autocomplete="idc"
+                                            disabled>
 
                                         @error('idc')
                                             <span class="invalid-feedback" role="alert">
@@ -51,7 +56,8 @@
 
                                 <div class="row mb-3">
                                     <label for="mobile"
-                                        class="col-md-4 col-form-label text-md-end">{{ __('pack::pack.mobile') }} </label>
+                                        class="col-md-4 col-form-label text-md-end required">{{ __('pack::pack.mobile') }}
+                                    </label>
 
                                     <div class="col-md-6">
                                         <input id="mobile" type="number"
@@ -67,25 +73,6 @@
                                 </div>
 
 
-                                {{--                                 
-                                <div class="row mb-3">
-                                    <label for="birthday"
-                                        class="col-md-4 col-form-label text-md-end">{{ __('pack::pack.birthday') }}</label>
-
-                                    <div class="col-md-6">
-                                        <input id="birthday" type="date"
-                                            class="form-control @error('birthday') is-invalid
-                                            
-                                        @enderror"
-                                            name="birthday" value="{{ old('birthday') }}" autocomplete="birthday">
-
-                                        @error('birthday')
-                                            <span class="invalid-feedback" role="alert">
-                                                <small>{{ $message }}</small>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div> --}}
 
                                 <div class="row mb-4 align-items-center">
                                     <label for="birthday"
@@ -104,11 +91,11 @@
                                             @endfor
 
                                         </select>
-     @error('year')
-                                        <span class="invalid-feedback" role="alert">
-                                            <small>{{ $message }}</small>
-                                        </span>
-                                    @enderror
+                                        @error('year')
+                                            <span class="invalid-feedback" role="alert">
+                                                <small>{{ $message }}</small>
+                                            </span>
+                                        @enderror
 
                                     </div>
 
@@ -162,16 +149,17 @@
                                     @enderror
                                 </div>
 
-
-                                @if ($citizen->q1)
+                             
+                                @if ($q1)
                                     <div class="row mb-3">
 
-                                        <label for="q1" class="col-md-4 col-form-label text-md-end">السؤال
+                                        <label for="q1" class="col-md-4 col-form-label text-md-end required">السؤال
                                             الاول</label>
 
                                         <div class="col-md-3">
                                             <p id="q1_p" type="text" class="form-control border-0">
-                                                {{ $citizen->q1 }}؟
+                                              
+                                                {{ $q1 }}؟
                                             </p>
 
                                         </div>
@@ -179,21 +167,25 @@
                                         <div class="col-md-3">
                                             <input name="answer_q1" type="text" value="{{ old('answer_q1') }}"
                                                 @class(['form-control', 'is-invalid' => $errors->has('answer_q1')])>
-                                            @include('pack::pack-Layouts._show-error', ['field_name' => 'answer_q1'])
+                                            @include('pack::pack-layouts._show-error', [
+                                                'field_name' => 'answer_q1',
+                                            ])
+                                           <small class="text-muted"> مثال: 2012</small>
                                         </div>
 
                                     </div>
                                 @endif
-
-                                @if ($citizen->q2)
+                              
+                                @if ($q2)
                                     <div class="row mb-3">
 
-                                        <label for="q2" class="col-md-4 col-form-label text-md-end">السؤال
+                                        <label for="q2" class="col-md-4 col-form-label text-md-end required">السؤال
                                             الثاني</label>
 
                                         <div class="col-md-3">
                                             <p id="q2_p" type="text" class="form-control border-0">
-                                                {{ $citizen->q2 }}؟
+                                                {{-- {{ $citizen['questions']['q2'] }}؟ --}}
+                                                {{ $q2 }}؟
                                             </p>
 
                                         </div>
@@ -201,16 +193,19 @@
                                         <div class="col-md-3">
                                             <input name="answer_q2" value="{{ old('answer_q2') }}"
                                                 @class(['form-control', 'is-invalid' => $errors->has('answer_q2')])>
-                                            @include('pack::pack-Layouts._show-error', ['field_name' => 'answer_q2'])
+                                            @include('pack::pack-layouts._show-error', [
+                                                'field_name' => 'answer_q2',
+                                            ])
+                                               <small class="text-muted"> مثال: 1983</small>
                                         </div>
-
+                                     
                                     </div>
                                 @endif
 
 
                                 <div class="row mb-3">
                                     <label for="password"
-                                        class="col-md-4 col-form-label text-md-end">{{ __('pack::pack.password') }}</label>
+                                        class="col-md-4 col-form-label text-md-end required">{{ __('pack::pack.password') }}</label>
 
                                     <div class="col-md-6">
                                         <input id="password" type="password"
@@ -226,7 +221,7 @@
                                 </div>
 
                                 <div class="row mb-3">
-                                    <label for="password-confirm" class="col-md-4 col-form-label text-md-end">
+                                    <label for="password-confirm" class="col-md-4 col-form-label text-md-end required">
                                         {{ __('pack::pack.password-confirm') }} </label>
 
                                     <div class="col-md-6">

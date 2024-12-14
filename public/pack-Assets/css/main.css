@@ -1,8 +1,7 @@
 @font-face {
     font-family: 'Droid';
      
-        src:url(/font/Droid.Arabic.Kufi_DownloadSoftware.iR_.ttf);
-        
+    src:url(../font/Droid.Arabic.Kufi_DownloadSoftware.iR_.ttf);
 }
 body {
     direction: rtl;

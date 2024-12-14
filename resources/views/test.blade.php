@@ -9,7 +9,7 @@
 <body>
    
     
-{{Auth::user()->user_name}}
+{{session('auth_id')??'dssssssssssss' }}
 
 </body>
 </html>

@@ -3,6 +3,7 @@ return [
       "Name" => "Full name",
       "idc" => "Identify number",
       'password' => 'Password',
+      'new_password'=>'New Password',
       'password-confirm' => 'Password-confirm ',
       'mobile' => 'Mobile',
       'birthday' => 'Birthday',
@@ -27,4 +28,7 @@ return [
       'year'=>'Year',
       'month'=>'Month',
       'day'=>'Day',
+      'connection_faild, please try again later'=>'connection_faild, please try again later',
+      'faild_login'=>'These credentials do not match our records.',
+      'change_password_success'=>'Password changed successfuly',
 ];

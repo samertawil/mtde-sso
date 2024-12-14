@@ -15,9 +15,8 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "php": "^8.2",
-        "laravel/ui": "^4.6",
-        "mews/captcha": "^3.4"
+        "php": "^8.0" 
+     
     }
 }
 

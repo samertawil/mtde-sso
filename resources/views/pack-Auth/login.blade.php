@@ -5,12 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="{{asset('pack-assets/css/bootstrap.rtl.css')}}">
-    <link rel="stylesheet" href="{{asset('pack-assets/css/main.css')}}">
- 
+    <link rel="stylesheet" href="{{ asset('pack-assets/css/bootstrap.rtl.css') }}">
+    <link rel="stylesheet" href="{{ asset('pack-assets/css/main.css') }}">
+
     <title>تسجيل الدخول</title>
 </head>
- 
+
 
 <body>
 
@@ -26,13 +26,15 @@
                         <div>
                             <strong class="mx-2"> المساعدات والإغاثة الإنسانية </strong>
                         </div>
-    
+
                         <div class="text-center pt-2">
-                            <small > غزة والشمال</small>
+                            <small> غزة والشمال</small>
                         </div>
 
+                        {{session('auth_idc')}}
+                     
                     </div>
-                  
+
 
 
                 </div>
@@ -43,10 +45,16 @@
                 <div class="col-md-6">
                     <div class="card ">
 
-                        <div class="card-header "> <span> تسجيل الدخول </span>  <a  class="text-decoration-none" style="float: left;"
-                             {{-- href="{{route('about-us')}}">حول الاغاثة?</a>  </div> --}}
-                             href="#">حول الاغاثة?</a>  </div>
-                        @include('pack::pack-Layouts._alert-session')
+                        <div class="card-header "> <span> تسجيل الدخول </span> <a class="text-decoration-none"
+                                style="float: left;" {{-- href="{{route('about-us')}}">حول الاغاثة?</a>  </div> --}} href="#">حول نظام الدخول?</a> </div>
+                        <div>
+
+                        </div>
+
+                        <div class="mt-3">
+                            @include('pack::pack-layouts._alert-session')
+                        </div>
+
                         <div class="card-body">
                             <form action="{{ route('login') }}" method="POST">
                                 @csrf
@@ -56,10 +64,9 @@
 
                                     <div class=" ">
                                         <input id="idc" type="text"
-                                    
-                                            class="form-control     @error('idc') is-invalid @enderror" 
-                                            name="idc"
-                                            value="{{ old('idc') }}" required autocomplete="idc" autofocus dir="ltr">
+                                            class="form-control     @error('idc') is-invalid @enderror" name="idc"
+                                            value="{{ old('idc') }}" required autocomplete="idc" autofocus
+                                            dir="ltr">
 
                                         @error('idc')
                                             <span class="invalid-feedback" role="alert">
@@ -70,13 +77,13 @@
                                 </div>
 
                                 <div class=" mb-3">
-                                    <label for="password" class="  col-form-label">{{ __('pack::pack.password') }}</label>
+                                    <label for="password"
+                                        class="  col-form-label">{{ __('pack::pack.password') }}</label>
 
                                     <div class=" ">
                                         <input id="password" type="password"
-                                      
-                                            class="form-control   @error('password') is-invalid @enderror" name="password"
-                                            required autocomplete="current-password">
+                                            class="form-control   @error('password') is-invalid @enderror"
+                                            name="password" required autocomplete="current-password">
 
                                         @error('password')
                                             <span class="invalid-feedback" role="alert">
@@ -89,8 +96,9 @@
                                 <div class="row mb-1">
                                     <div class="col-md-6 ">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-        
+                                            <input class="form-check-input" type="checkbox" name="remember"
+                                                id="remember" {{ old('remember') ? 'checked' : '' }}>
+
                                             <label class="form-check-label" for="remember">
                                                 {{ __('pack::pack.Remember Me') }}
                                             </label>
@@ -109,20 +117,16 @@
 
                             <div class="d-md-flex justify-content-between">
                                 <div class="mb-4" id="change_id">
-                                    {{-- <a href="{{ route('change.password.form') }}" id="btn1" --}}
-                                    <a href="#" id="btn1"
-                                        class="text-decoration-none ">{{ __('pack::pack.Forgot Your Password') }} ؟ </a>
+                                
+                                     <a href="{{ route('forgetPassword.create') }}" id="btn1"
+                                        class="text-decoration-none ">{{ __('pack::pack.Forgot Your Password') }} ؟
+                                    </a>
                                 </div>
-                             
+
                                 <a href="{{ route('register.create') }}"
                                     class="text-decoration-none">{{ __('pack::pack.register_new_account') }}</a>
                             </div>
-                            <div class="my-4">
-
-                                {{-- <a href="{{ route('gethelp') }}" --}}
-                                <a href="#"
-                                    class="text-decoration-none">{{ __('pack::pack.get-help') }}</a>
-                            </div>
+                           
                         </div>
                     </div>
                 </div>

@@ -7,22 +7,7 @@
             </button>
         </div>
     @endif
-
-    @if (Route::current()->uri() == 'address/create-orginal-address' ||
-            Route::current()->uri() == 'address/create-contacts-info' ||
-            Route::current()->uri() == 'address/create')
-        <script>
-            setTimeout(() => {
-                $('.alert').fadeOut()
-            }, 60000);
-        </script>
-    @else
-        <script>
-            setTimeout(() => {
-                $('.alert').fadeOut()
-            }, 6000);
-        </script>
-    @endif
+ 
 </body>
 
 </html>

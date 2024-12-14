@@ -10,9 +10,11 @@
 
                     <div class="card-body">
 
-                        <div class=" mb-3">
+                        @include('pack::pack-layouts._alert-session')
+                        
+                        <div class="">
                             <label for="idc"
-                                class="  col-form-label ">{{ __('pack::pack.idc') }}</label>
+                                class="  col-form-label required ">{{ __('pack::pack.idc') }}</label>
 
                             <div>
                                 <input id="idc" type="text"

@@ -3,6 +3,7 @@ return [
       "Name" => "الاسم",
       "idc" => "رقم الهوية",
       'password' => 'كلمة المرور',
+      'new_password'=>'كلمة المرور الجديدة',
       'password-confirm' => 'تأكيد كلمة المرور ',
       'mobile' => 'الهاتف الخليوي',
       'birthday' => 'تاريخ الميلاد',
@@ -27,4 +28,7 @@ return [
       'year'=>'السنة',
       'month'=>'الشهر',
       'day'=>'اليوم',
+      'connection_faild, please try again later'=>'خطأ في الاتصال, يرجى المحاولة لاحقا',
+      'faild_login'=>'خطأ باسم المستخدم او كلمة المرور',
+      'change_password_success'=>'تم تعديل كلمة المرور بنجاح',
 ];
