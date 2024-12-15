@@ -8,20 +8,23 @@ return [
       'mobile' => 'Mobile',
       'birthday' => 'Birthday',
       'Login' => 'Login',
+      'user login'=>"User's login",
+      'about login system'=>'About login system',
       'system_name' => 'System name',
       'description' => 'Description',
       'register_new_account' => 'Register new account',
+      'register'=>'Register',
       'Forgot Your Password' => 'Forgot your password',
       'get-help' => 'Get-help',
-      'created_by_idc' => 'رقم هوية مقدم الطلب',
+     
       'email' => 'Email',
-      'attachments' => 'المرفقات',
+     
       'name' => 'Full name',
-      'mobile_primary'  => 'الهاتف الاساسي',
-      'mobile_secondary' => 'الهاتف البديل',
+      'mobile_primary'  => 'Mobile primary',
+      'mobile_secondary' => 'Mobile secondary',
       'notes' => 'Notes',
       'full_name'  => 'Full name',
-      'captcha' => 'كود التحقق',
+      'captcha' => 'Captcha',
     
       'Remember Me' => 'Remember Me',
       'issue_description' => 'Issue description',
@@ -31,4 +34,10 @@ return [
       'connection_faild, please try again later'=>'connection_faild, please try again later',
       'faild_login'=>'These credentials do not match our records.',
       'change_password_success'=>'Password changed successfuly',
+      'langName'=>' : Login offered in ', 
+      'q1'=>' Question 1 ',
+      'q2'=>' Question 2 ',
+      'ex'=>'ex : ',
+     
 ];
+

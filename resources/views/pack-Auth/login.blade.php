@@ -29,10 +29,21 @@
 
                         <div class="text-center pt-2">
                             <small> غزة والشمال</small>
+
+                            @php
+                                //mapping
+                                $pos = strpos(LaravelLocalization::getCurrentLocaleRegional(), '_');
+                                $LocaleRegional = substr(LaravelLocalization::getCurrentLocaleRegional(), 0, $pos);
+
+                            @endphp
+
+
+
+
                         </div>
 
-                        {{session('auth_idc')}}
-                     
+                        {{ session('auth_idc') }}
+
                     </div>
 
 
@@ -45,8 +56,9 @@
                 <div class="col-md-6">
                     <div class="card ">
 
-                        <div class="card-header "> <span> تسجيل الدخول </span> <a class="text-decoration-none"
-                                style="float: left;" {{-- href="{{route('about-us')}}">حول الاغاثة?</a>  </div> --}} href="#">حول نظام الدخول?</a> </div>
+                        <div class="card-header "> <span>{{ __('pack::pack.user login') }} </span> <a
+                                class="text-decoration-none" style="float: left;" {{-- href="{{route('about-us')}}">حول الاغاثة?</a>  </div> --}}
+                                href="#">{{ __('pack::pack.about login system') }}</a> </div>
                         <div>
 
                         </div>
@@ -117,8 +129,8 @@
 
                             <div class="d-md-flex justify-content-between">
                                 <div class="mb-4" id="change_id">
-                                
-                                     <a href="{{ route('forgetPassword.create') }}" id="btn1"
+
+                                    <a href="{{ route('forgetPassword.create') }}" id="btn1"
                                         class="text-decoration-none ">{{ __('pack::pack.Forgot Your Password') }} ؟
                                     </a>
                                 </div>
@@ -126,13 +138,21 @@
                                 <a href="{{ route('register.create') }}"
                                     class="text-decoration-none">{{ __('pack::pack.register_new_account') }}</a>
                             </div>
-                           
+                            {{-- {{$LocaleRegional}} --}}
+
+
                         </div>
+
                     </div>
+                    @include('pack::pack-layouts._lang')
                 </div>
+
             </div>
+
         </div>
+
     </div>
+
 
     <script src="{{ asset('pack-assets/js/bootstrap.js') }}"></script>
     <script src="{{ asset('pack-assets/js/jQuery.js') }}"></script>

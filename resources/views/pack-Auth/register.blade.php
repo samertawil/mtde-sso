@@ -8,21 +8,21 @@
     <meta name="google" content="notranslate">
     <link rel="stylesheet" href="{{ asset('pack-assets/css/bootstrap.rtl.css') }}">
     <link rel="stylesheet" href="{{ asset('pack-assets/css/main.css') }}">
-    <title>تسجيل حساب</title>
+    <title>{{ __('pack::pack.register_new_account') }}</title>
 </head>
 
 
 <body>
 
 
-    <div class="d-flex mt-4" style="height: 600px;">
+    <div class="d-flex mt-4" style="height: 750px;">
         <div class="container m-auto">
             <div class="row justify-content-center">
                 <div class="col-md-8">
                     <div class="card">
 
                     
-                        <div class="card-header">تسجيل حساب جديد</div>
+                        <div class="card-header">{{ __('pack::pack.register_new_account') }}</div>
 
                         @include('pack::pack-layouts._error-form')
                         
@@ -153,8 +153,8 @@
                                 @if ($q1)
                                     <div class="row mb-3">
 
-                                        <label for="q1" class="col-md-4 col-form-label text-md-end required">السؤال
-                                            الاول</label>
+                                        <label for="q1" class="col-md-4 col-form-label text-md-end required">{{__('pack::pack.q1')}}
+                                            </label>
 
                                         <div class="col-md-3">
                                             <p id="q1_p" type="text" class="form-control border-0">
@@ -170,7 +170,7 @@
                                             @include('pack::pack-layouts._show-error', [
                                                 'field_name' => 'answer_q1',
                                             ])
-                                           <small class="text-muted"> مثال: 2012</small>
+                                           <small class="text-muted">{{__('pack::pack.ex')}} 2012</small>
                                         </div>
 
                                     </div>
@@ -179,12 +179,12 @@
                                 @if ($q2)
                                     <div class="row mb-3">
 
-                                        <label for="q2" class="col-md-4 col-form-label text-md-end required">السؤال
-                                            الثاني</label>
+                                        <label for="q2" class="col-md-4 col-form-label text-md-end required">{{__('pack::pack.q2')}}
+                                            </label>
 
                                         <div class="col-md-3">
                                             <p id="q2_p" type="text" class="form-control border-0">
-                                                {{-- {{ $citizen['questions']['q2'] }}؟ --}}
+                                
                                                 {{ $q2 }}؟
                                             </p>
 
@@ -196,7 +196,7 @@
                                             @include('pack::pack-layouts._show-error', [
                                                 'field_name' => 'answer_q2',
                                             ])
-                                               <small class="text-muted"> مثال: 1983</small>
+                                               <small class="text-muted">{{__('pack::pack.ex')}} 1983</small>
                                         </div>
                                      
                                     </div>
@@ -236,13 +236,14 @@
                                 <div class="row mb-0 ">
                                     <div class="col-md-6 offset-md-4 text-end">
                                         <button type="submit" class="btn btn-primary">
-                                            تسجيل
+                                            {{__('pack::pack.register')}}
                                         </button>
                                     </div>
                                 </div>
                             </form>
                         </div>
                     </div>
+                    @include('pack::pack-layouts._lang')
                 </div>
             </div>
         </div>

@@ -50,6 +50,7 @@
 
                     </div>
                 </div>
+                @include('pack::pack-layouts._lang')
             </div>
         </div>
     </div>
