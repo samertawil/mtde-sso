@@ -3,11 +3,19 @@
      
     src:url(../font/Droid.Arabic.Kufi_DownloadSoftware.iR_.ttf);
 }
+
+@font-face {
+    font-family: 'NotoSans';
+     
+        src:url(../font/NotoSans-Regular.ttf);
+        
+}
+
 body {
-    direction: rtl;
-    text-align: right !important;
+    /* direction: rtl;
+    text-align: right !important; */
     margin: 0;
-    font-family: 'Droid','Courier New', Courier, monospace !important;
+    font-family: 'Droid','NotoSans','Courier New', Courier, monospace !important;
     background-color:#f7f7f7 !important;
 }
 

@@ -1,25 +1,17 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
+@extends('pack::pack-layouts.master')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="google" content="notranslate">
-    <link rel="stylesheet" href="{{ asset('pack-assets/css/bootstrap.rtl.css') }}">
-    <link rel="stylesheet" href="{{ asset('pack-assets/css/main.css') }}">
-    <title>تعيين كلمة المرور</title>
-</head>
-
-<body>
+@section('content')
+@section('title', __('pack::pack.Forgot Your Password'))
 
 
-    <div class="d-flex mt-4" style="height: 600px;">
+
+
+    <div class="d-flex mt-4 " style="height: 650px;">
         <div class="container m-auto">
             <div class="row justify-content-center">
                 <div class="col-md-8">
                     <div class="card">
-                        <div class="card-header">اعادة تعيين كلمة المرور</div>
+                        <div class="card-header"> {{__('pack::pack.Forgot Your Password')}}</div>
 
                         <div class="card-body">
 
@@ -27,7 +19,7 @@
                             @include('pack::pack-layouts._error-form')
 
                             
-                            <form action="{{ route('saveForgetPassword', $idc) }}" method="POST">
+                            <form action="{{ route('sso.saveForgetPassword', $idc) }}" method="POST">
                                 @csrf
 
 
@@ -139,8 +131,8 @@
                                 @if ($q1)
                                     <div class="row mb-3">
 
-                                        <label for="q1" class="col-md-4 col-form-label text-md-end required" >السؤال
-                                            الاول</label>
+                                        <label for="q1" class="col-md-4 col-form-label text-md-end required" >
+                                            {{__('pack::pack.q1')}}  </label>
 
                                         <div class="col-md-3">
                                             <p id="q1_p" type="text" class="form-control border-0">
@@ -156,7 +148,7 @@
                                             @include('pack::pack-layouts._show-error', [
                                                 'field_name' => 'answer_q1',
                                             ])
-                                            <small class="text-muted"> مثال: 2012</small>
+                                            <small class="text-muted">{{__('pack::pack.ex')}} 2012</small>
                                         </div>
 
                                     </div>
@@ -165,8 +157,8 @@
                                 @if ($q2)
                                     <div class="row mb-3">
 
-                                        <label for="q2" class="col-md-4 col-form-label text-md-end required">السؤال
-                                            الثاني</label>
+                                        <label for="q2" class="col-md-4 col-form-label text-md-end required">
+                                            {{__('pack::pack.q2')}}</label>
 
                                         <div class="col-md-3">
                                             <p id="q2_p" type="text" class="form-control border-0">
@@ -182,7 +174,7 @@
                                             @include('pack::pack-layouts._show-error', [
                                                 'field_name' => 'answer_q2',
                                             ])
-                                            <small class="text-muted"> مثال: 1983</small>
+                                            <small class="text-muted"> {{__('pack::pack.ex')}} 1983</small>
                                         </div>
 
                                     </div>
@@ -210,7 +202,7 @@
 
                                 <div class="row mb-3">
                                     <label for="password-confirm" class="col-md-4 col-form-label text-md-end required">
-                                        {{ __('pack::pack.password-confirm') }} </label>
+                                        {{ __('pack::pack.password_confirm') }} </label>
 
                                     <div class="col-md-6">
                                         <input id="password-confirm" type="password" class="form-control"
@@ -220,9 +212,9 @@
 
 
 
-                                <div class="text-end">
+                                <div class="mt-5  ">
                                     <button type="submit" class="btn btn-primary">
-                                        اعادة التعيين
+                                      {{__('pack::pack.reset')}}
                                     </button>
                                 </div>
 
@@ -234,9 +226,4 @@
         </div>
     </div>
 
-    <script src="{{ asset('pack-assets/js/bootstrap.js') }}"></script>
-    <script src="{{ asset('pack-assets/js/jQuery.js') }}"></script>
-
-</body>
-
-</html>
+    @endsection

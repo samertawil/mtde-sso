@@ -1,20 +1,12 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="google" content="notranslate">
-    <link rel="stylesheet" href="{{ asset('pack-assets/css/bootstrap.rtl.css') }}">
-    <link rel="stylesheet" href="{{ asset('pack-assets/css/main.css') }}">
-    <title>{{ __('pack::pack.register_new_account') }}</title>
-</head>
+ 
 
 
-<body>
+@extends('pack::pack-layouts.master')
 
+@section('content')
+@section('title',__('pack::pack.register_new_account'))
 
+ 
     <div class="d-flex mt-4" style="height: 750px;">
         <div class="container m-auto">
             <div class="row justify-content-center">
@@ -29,8 +21,8 @@
                         @include('pack::pack-layouts._alert-session')
 
                         <div class="card-body">
-                         
-                            <form method="POST" action="{{ route('register.store', $idc) }}">
+                         {{-- here --}}
+                            <form method="POST" action="{{ route('sso.register') }}">
                                 @csrf
 
                                 <div class="row mb-3">
@@ -38,10 +30,10 @@
                                         class="col-md-4 col-form-label text-md-end required">{{ __('pack::pack.idc') }}</label>
 
                                     <div class="col-md-6">
-                                        <input id="idc" type="number"
+                                        <input id="idc" type="text"
                                             class="form-control @error('idc') is-invalid @enderror" name="idc"
                                            value="{{ old('idc', $idc) }}" autocomplete="idc"
-                                            disabled>
+                                           readonly  >
 
                                         @error('idc')
                                             <span class="invalid-feedback" role="alert">
@@ -222,7 +214,7 @@
 
                                 <div class="row mb-3">
                                     <label for="password-confirm" class="col-md-4 col-form-label text-md-end required">
-                                        {{ __('pack::pack.password-confirm') }} </label>
+                                        {{ __('pack::pack.password_confirm') }} </label>
 
                                     <div class="col-md-6">
                                         <input id="password-confirm" type="password" class="form-control"
@@ -250,9 +242,4 @@
     </div>
 
 
-    <script src="{{ asset('pack-assets/js/bootstrap.js') }}"></script>
-    <script src="{{ asset('pack-assets/js/jQuery.js') }}"></script>
-
-</body>
-
-</html>
+    @endsection

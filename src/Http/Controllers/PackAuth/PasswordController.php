@@ -12,28 +12,35 @@ use mtde\sso\Http\Requests\ChangePassRequest;
 class PasswordController
 {
 
-    public function create()
+    public function changepassword_form()
     {
+
         return view('pack::pack-auth.change-password-form');
     }
 
     public function changePassword(ChangePassRequest $request)
     {
 
+
+
         $res = Http::post("https://sso.egaza.ps/api/changePassword/" . $request->idc, [
 
-            'token' => 'YWZtxm6iQp7CPmVFwLAUMt2HefbaUHnXSVrKHoJk',
+            'token' => config('sso.ssoToken'),
             'old_password' => $request->old_password,
             'new_password' => $request->password,
 
         ]);
 
+
         $data = $res->json();
 
         if ($res->successful() && $data['status'] == true) {
 
-            return redirect()->route('login')->with('message', __('pack::pack.change_password_success'))->with('type', 'success');
-            //nedd to logout to login in new password
+            if (AuthController::isAuth()) {
+                AuthController::logout();
+            }
+            return redirect()->route('sso.login.form')->with('message', __('pack::pack.change_password_success'))->with('type', 'success');
+          
 
         } elseif ($res->successful() && $data['status'] != true) {
 
@@ -56,10 +63,9 @@ class PasswordController
     {
 
 
-
         $res = Http::post("https://sso.egaza.ps/api/forgetPasswordGetQuestions/" . $idc, [
 
-            'token' => 'YWZtxm6iQp7CPmVFwLAUMt2HefbaUHnXSVrKHoJk',
+            'token' => config('sso.ssoToken'),
         ]);
 
         if ($res->successful()) {
@@ -86,7 +92,7 @@ class PasswordController
 
             $error = $res;
 
-            return redirect()->route('register.create')->with('message', __('pack::pack.connection_faild, please try again later'))
+            return redirect()->route('sso.register.create')->with('message', __('pack::pack.connection_faild, please try again later'))
                 ->with('type', 'danger');
         }
     }
@@ -113,56 +119,52 @@ class PasswordController
         }
     }
 
-    
+
     public function saveForgetPassword(ForgetRequest $request, $idc)
     {
-      
 
-         $birthdayDate = $request->year . '-' . $request->month . '-' . $request->day;
+
+        $birthdayDate = $request->year . '-' . $request->month . '-' . $request->day;
 
 
         $res = Http::post("https://sso.egaza.ps/api/saveForgetPassword/" . $idc, [
 
-            'token' => 'YWZtxm6iQp7CPmVFwLAUMt2HefbaUHnXSVrKHoJk',
+            'token' => config('sso.ssoToken'),
             'answer1' => $request->answer_q1,
             'answer2' => $request->answer_q2,
             'new_password' => $request->password,
-          
-             'birth_date' =>  $birthdayDate,
+
+            'birth_date' =>  $birthdayDate,
         ]);
 
         $data = $res->json();
         if ($res->successful() && $data['status'] == true) {
 
-                  
-           
+
             session([
-                'auth_idc' =>$data['idc'],
-                'auth_full_name'=>$data['full_name']
+                'auth_idc' => $data['idc'],
+                'auth_full_name' => $data['full_name']
             ]);
-            
-               
-         return redirect('/');
+
+
+            return redirect()->route(config('sso.redirectRoute'));
 
         } elseif ($res->successful() && $data['status'] != true) {
 
-           
-            $errors = json_decode($res, true);
-                     
-            return redirect()->back()->withErrors($errors['msg']);
 
-            session_destroy();
+            $errors = json_decode($res, true);
+
+            return redirect()->back()->withErrors($errors['msg']);
+            
         } else {
 
             return redirect()->back()->with('message', __('pack::pack.connection_faild, please try again later'))
                 ->with('type', 'danger');
         }
 
-           
-            $errors = json_decode($res, true);
 
-            return redirect()->back()->withErrors($errors['msg']);
+        $errors = json_decode($res, true);
 
-            session_destroy();
+        return redirect()->back()->withErrors($errors['msg']);
     }
 }

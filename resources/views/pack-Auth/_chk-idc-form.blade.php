@@ -6,7 +6,7 @@
             <div class="col-md-6">
                 <div class="card ">
 
-                    <div class="card-header ">حسابات المستخدمين</div>
+                    <div class="card-header ">{{$title}}</div>
 
                     <div class="card-body">
 
@@ -33,18 +33,15 @@
                         <div class="d-grid gap-2">
 
                             <button type="submit" class="  btn btn-primary btn-block my-5">
-                                {{ $buttontitle ?? 'استمرار' }}
+                                {{ $buttontitle ?? __('pack::pack.begin forget') }}
 
                             </button>
 
 
                         </div>
                         <div class="text-end">
-                            <a href="{{ route('login') }}" class="text-decoration-none text-end"> إلغاء ورجوع </a>
+                            <a href="{{ route('sso.login.form') }}" class="text-decoration-none text-end"> {{ __('pack::pack.cancel & back')}} </a>
                         </div>
-
-
-
 
 
 

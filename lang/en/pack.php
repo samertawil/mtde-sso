@@ -4,7 +4,8 @@ return [
       "idc" => "Identify number",
       'password' => 'Password',
       'new_password'=>'New Password',
-      'password-confirm' => 'Password-confirm ',
+      'old_password'=>'Old password',
+      'password_confirm' => 'Password-confirm ',
       'mobile' => 'Mobile',
       'birthday' => 'Birthday',
       'Login' => 'Login',
@@ -38,6 +39,13 @@ return [
       'q1'=>' Question 1 ',
       'q2'=>' Question 2 ',
       'ex'=>'ex : ',
+      'begin register'=>'Begin',
+      'begin forget'=>'Begin',
+      'cancel & back'=>'Cancel & Back',
+      'reset'=>'Reset',
+      'change password'=>'Change Password',
+      'Logout'=>'Logout',
+ 
      
 ];
 

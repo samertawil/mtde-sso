@@ -1,35 +1,21 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
+@extends('pack::pack-layouts.master')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="google" content="notranslate">
-
-    <link rel="stylesheet" href="{{asset('pack-assets/css/bootstrap.rtl.css')}}">
-    <link rel="stylesheet" href="{{asset('pack-assets/css/main.css')}}">
-    <title>تسجيل حساب</title>
-</head>
-
-<body>
+@section('content')
+@section('title', __('pack::pack.register_new_account'))
 
 
 
-    <form action="{{ route('registration.form') }}" method="get">
-         
-        @include('pack::pack-auth._chk-idc-form',['buttontitle'=>'البدء بعملية التسجيل'])
-       
-    </form>
 
 
+<form action="{{ route('sso.register.form') }}" method="get">
+    
+    
+    @include('pack::pack-auth._chk-idc-form', [
+        'buttontitle' => __('pack::pack.begin register'),
+        'title' => __('pack::pack.register_new_account'),
+    ])
 
-    <script src="{{ asset('pack-assets/js/bootstrap.js') }}"></script>
-    <script src="{{ asset('pack-assets/js/jQuery.js') }}"></script>
+</form>
 
 
-</body>
-
-</html>
-
-
+@endsection

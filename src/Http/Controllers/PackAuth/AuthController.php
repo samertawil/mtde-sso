@@ -10,97 +10,126 @@ use Illuminate\Support\Facades\Validator;
 use mtde\sso\Http\Requests\ChkIdcRequest;
 use mtde\sso\Http\Requests\RegisterRequest;
 
-class AuthController
+class  AuthController
 {
 
-    protected $redirectTo = 'test11';
+
+    public static function isAuth()
+    {
+
+        if (session('auth_idc')) {
+            return true;
+        }
+        return false;
+    }
+
+    public static function printAuthData()
+    {
+
+        if (self::isAuth()) {
+            return  ['name' => session('auth_full_name'), 'idc' => session('auth_idc')];
+        } else {
+            return ['name' => null, 'idc' => null];
+        }
+    }
+
+    public static  function setSessionData($data)
+    {
+        session([
+            'auth_idc' => $data['idc'],
+            'auth_full_name' => $data['full_name'],
+        ]);
+    }
+
+    public static  function forgetSessionData()
+    {
+  
+        session()->forget('auth_idc');
+        session()->forget('auth_full_name');
+    }
 
     public function showLoginForm()
     {
-     
-        $user=session('auth_idc');
-   
-        if(is_null($user)) {
+
+        if (! self::isAuth()) {
             return view('pack::pack-auth.login');
         } else {
-            return redirect('/');
+            return redirect()->route(config('sso.redirectRoute'));
         }
-      
     }
-   
+
     public function login(LoginRequest $request)
     {
-    
+
      
         $res =  Http::post("https://sso.egaza.ps/api/login", [
-            'token' => 'YWZtxm6iQp7CPmVFwLAUMt2HefbaUHnXSVrKHoJk',
+            'token' => config('sso.ssoToken'),
             'idc' => $request->idc,
             'password' => $request->password
         ]);
 
         $data = $res->json();
-       
-        if ($res->successful() && $data['status'] == true) {
-            
-            $data = $res->json();
-            
-            session([
-                'auth_idc' => $data['idc'],
-                'auth_full_name'=> $data['full_name'],
-            ]);
 
-               return redirect('/');
+        if ($res->successful() && $data['status'] == true) {
+
+            self::setSessionData($data);
+           
+
+            return  redirect()->route(config('sso.redirectRoute'));
 
         } elseif ($res->successful() && $data['status'] != true) {
+
+            self::forgetSessionData();
 
             $validator = Validator::make([], []);
             $validator->errors()->add('idc', $data['msg']);
             return redirect()->back()->withErrors($validator)->withInput();
+
         } else {
+
+            self::forgetSessionData();
 
             return redirect()->route('login')->with('message', __('pack::pack.connection_faild, please try again later'))
                 ->with('type', 'danger');
         }
     }
 
-    
+
 
     // register methods
     public static function getPersonalData($idc)
     {
 
-       
-        $res = Http::post("https://sso.egaza.ps/api/register/".$idc ,[
-           
-            'token'=>"YWZtxm6iQp7CPmVFwLAUMt2HefbaUHnXSVrKHoJk",
+        $res = Http::post("https://sso.egaza.ps/api/register/" . $idc, [
+
+            'token' => config('sso.ssoToken'),
         ]);
-        
-               
-        if ($res->successful()) {
 
-            $citizen = json_decode($res, true);
- 
-            if ($citizen['status'] == true) {
+        $data = $res->json();
 
-                session([
-                    'idc' => $citizen['questions']['idc'],
-                    'full_name' => $citizen['questions']['full_name'],
-                    'q1' => $citizen['questions']['q1'],
-                    'q2' => $citizen['questions']['q2']
-                ]);
-            } else {
+        if ($res->successful() && $data['status'] == true) {
 
-                session([
-                    'wrongMsg' => $citizen['msg'],
-                ]);
+            return  $data = [
+                'status' => 'success',
+                'idc' => $data['questions']['idc'],
+                'full_name' => $data['questions']['full_name'],
+                'q1' => $data['questions']['q1'],
+                'q2' => $data['questions']['q2']
+            ];
+        } elseif ($res->successful() && $data['status'] != true) {
 
-                session()->forget('idc');
-            }
+            return  $data = [
+                'status' => 'false',
+                'wrongMsg' => $data['msg'],
+            ];
+
         } else {
 
-            $error = $res;
+            return  $data = [
+                'status' => 'fail conn',
+            ];
 
-            return redirect()->route('register.create')->with('message', __('pack::pack.connection_faild, please try again later'))
+            return redirect()->route('sso.register.create')->with('message', __('pack::pack.connection_faild, please try again later'))
                 ->with('type', 'danger');
         }
     }
@@ -111,36 +140,51 @@ class AuthController
         return view('pack::pack-auth.register-create');
     }
 
-    public function register(ChkIdcRequest $request)
+    public static function register_form(ChkIdcRequest $request)
     {
 
-        $this->getPersonalData($request->idc);
+        session()->forget('q1');
+        session()->forget('q2');
 
-        if (session('idc')) {
-            $full_name = session('full_name');
-            $idc = session('idc');
-            $q1 = session('q1');
-            $q2 = session('q2');
+        $x1 = self::getPersonalData($request->idc);
+
+        if ($x1['status'] == 'success') {
+
+            $full_name = $x1['full_name'];
+            $idc       = $x1['idc'];
+            $q1        = $x1['q1'];
+            $q2        = $x1['q2'];
+
+            session([
+                'q1' =>  $q1,
+                'q2' =>  $q2,
+            ]);
+
             return view('pack::pack-auth.register',  compact('full_name', 'idc', 'q1', 'q2'));
-        } else {
+        } elseif ($x1['status'] == 'false') {
 
             $validator = Validator::make([], []);
-            $validator->errors()->add('idc', session('wrongMsg'));
+            $validator->errors()->add('idc', $x1['wrongMsg']);
             return redirect()->back()->withErrors($validator)->withInput();
+
+        } elseif ($x1['status'] == 'fail conn') {
+
+            return redirect()->route('sso.register.create')->with('message', __('pack::pack.connection_faild, please try again later'))
+                ->with('type', 'danger');
         }
     }
 
-    
 
-    public function saveRegister(RegisterRequest $request, $idc)
+
+    public function saveRegister(RegisterRequest $request)
     {
-
+ 
         $birthdayDate = $request->year . '-' . $request->month . '-' . $request->day;
 
 
-        $res = Http::post("https://sso.egaza.ps/api/saveRegister/" . $idc, [
+        $res = Http::post("https://sso.egaza.ps/api/saveRegister/" . $request->idc, [
 
-            'token' => 'YWZtxm6iQp7CPmVFwLAUMt2HefbaUHnXSVrKHoJk',
+            'token' => config('sso.ssoToken'),
             'answer1' => $request->answer_q1,
             'answer2' => $request->answer_q2,
             'password' => $request->password,
@@ -149,48 +193,38 @@ class AuthController
             'birth_date' =>  $birthdayDate,
         ]);
 
+        $data = $res->json();
+ 
+        if ($res->successful() && $data['status'] == true) {
 
-        if ($res->successful()) {
-
-            $data = $res->json();
-    
-                    
             session([
-                'auth_idc' =>$data['idc'],
-                'auth_full_name'=>$data['full_name']
+                'auth_idc' => $data['idc'],
+                'auth_full_name' => $data['full_name']
             ]);
-            
-               
-          return session(['auth_idc','auth_full_name']);
+
+            return  redirect()->route(config('sso.redirectRoute'));
+        } elseif ($res->successful() && $data['status'] != true) {
+
+            $validator = Validator::make([], []);
+            $validator->errors()->add('idc', $data['msg']);
+            return redirect()->back()->withErrors($validator)->withInput();
 
         } else {
 
-           
-            $errors = json_decode($res, true);
-                     
-          return redirect()->back()->withErrors($errors['msg']);
-
-          session_destroy();
+            return redirect()->route('sso.login.form')->with('message', __('pack::pack.connection_faild, please try again later'))
+                ->with('type', 'danger');
         }
-
-           
-            $errors = json_decode($res, true);
-
-            return redirect()->back()->withErrors($errors['msg']);
-
-            session_destroy();
     }
 
-    public function logout(Request $request) {
-        // session()->flush();
-        //    session()->forget('auth_idc');
-        //    Session::flush();
-        // $request->session()->destroy(); 
-        dd(session('auth_idc')); 
-       dd(session()->all(),session('auth_idc'));
+    public static function logout()
+    {
+        
+        if (self::isAuth()) {
+       
+            session()->forget('auth_idc');
+            session()->forget('auth_full_name');
+ 
+        }
+        return redirect()->route('sso.login.form');
     }
-
-
-
-    
 }
