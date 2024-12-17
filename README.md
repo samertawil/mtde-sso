@@ -5,7 +5,7 @@ development by "MTDE" The Ministry of Communications and Digital Economy
 
 ## Installation
 
-- You can install the package via composer:
+- You can install the package via composer using the following command:
 
 <pre><span>composer require mtde/sso:dev-main</span></pre>
 
@@ -23,7 +23,7 @@ development by "MTDE" The Ministry of Communications and Digital Economy
 
 <pre><span>php artisan vendor:publish --provider="mtde\sso\MtdeSsoServiceProvider" </span></pre>
 
-\*Laravel Localization
+* Laravel Localization
 You may register the package middleware in the app/Http/Kernel.php file:
 
  <pre><span>
@@ -75,6 +75,12 @@ If you are using Laravel 11, you may register in bootstrap/app.php file in closu
 - Add token string in [config/sso.php - 'ssoToken' key]
 
 - add main page in [config/sso.php - 'redirectRoute' key]
+
+* Url: 
+
+ </span></pre> http://servername/sso/login-form </span></pre>
+
+ *  </span></pre> <h5>Finally Middleware->('ssoAuth');</h5> </span></pre>
 
   ## License
 
