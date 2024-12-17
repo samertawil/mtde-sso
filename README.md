@@ -1,21 +1,17 @@
-
-## About  library
+## About library
 
 mtde/sso is a library built by laravel framework, contains Auth presets (Login, Register, Forget passwork, change password)
-development by "MTDE" 
+development by "MTDE" The Ministry of Communications and Digital Economy
 
-
- 
 ## Installation
-You can install the package via composer:
 
-<pre><span>composer require mtde/sso</span></pre>
+- You can install the package via composer:
 
- 
-Register package by add provider services in bootstrap folder 
+<pre><span>composer require mtde/sso:dev-main</span></pre>
+
+- Register package by add provider services in bootstrap folder
 
 <pre><span>  mtde\sso\MtdeSsoServiceProvider::class, </span></pre>
-
 
  <pre><span> return [
     ...
@@ -23,25 +19,63 @@ Register package by add provider services in bootstrap folder
 ];
 </span></pre>
 
-publish :
+- publish to copy required config files and public assets :
 
-<pre><span>php artisan vendor:publish --provider=" mtde\sso\MtdeSsoServiceProvider" </span></pre>
+<pre><span>php artisan vendor:publish --provider="mtde\sso\MtdeSsoServiceProvider" </span></pre>
 
+\*Laravel Localization
+You may register the package middleware in the app/Http/Kernel.php file:
 
-Register middleware to localize the browser language
+ <pre><span>
+ class Kernel extends HttpKernel {
+    /**
+    * The application's route middleware.
+    *
+    * @var array
+    */
+    protected $middlewareAliases = [
+        /**** OTHER MIDDLEWARE ****/
+        'localize'                => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRoutes::class,
+        'localizationRedirect'    => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRedirectFilter::class,
+        'localeSessionRedirect'   => \Mcamara\LaravelLocalization\Middleware\LocaleSessionRedirect::class,
+        'localeCookieRedirect'    => \Mcamara\LaravelLocalization\Middleware\LocaleCookieRedirect::class,
+        'localeViewPath'          => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationViewPath::class
+    ];
+}
+          </span></pre>
+
+If you are using Laravel 11, you may register in bootstrap/app.php file in closure withMiddleware:
+
+ <pre><span>
+->withMiddleware(function (Middleware $middleware) {
+        $middleware->alias([
+            /**** OTHER MIDDLEWARE ALIASES ****/
+            'localize'                => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRoutes::class,
+            'localizationRedirect'    => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRedirectFilter::class,
+            'localeSessionRedirect'   => \Mcamara\LaravelLocalization\Middleware\LocaleSessionRedirect::class,
+            'localeCookieRedirect'    => \Mcamara\LaravelLocalization\Middleware\LocaleCookieRedirect::class,
+            'localeViewPath'          => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationViewPath::class,
+        ]);
+    })
+     </span></pre>
+
+- Register Middleware to make "ssoAuth"
 
  <pre><span>->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
            
             'ssoAuth'                => mtde\sso\Http\Middleware\ssoAuth::class,
            
-        ]); </span></pre>
+        ]);
+   })
+          </span></pre>
 
-Enable "ar"  as supported Locales language from [config - laravellocalization.php] 
+- Enable "ar" as supported Locales language from [config/laravellocalization.php - 'supportedLocales' array ]
 
-Add your token in [config - sso.php - 'ssoToken' key]
+- Add token string in [config/sso.php - 'ssoToken' key]
 
-add your main page in [config - sso.php - 'redirectRoute' key]
- 
-   ## License
-   This package is distributed under the MIT License. Please see the LICENSE file for more information.
+- add main page in [config/sso.php - 'redirectRoute' key]
+
+  ## License
+
+  This package is distributed under the MIT License. Please see the LICENSE file for more information.

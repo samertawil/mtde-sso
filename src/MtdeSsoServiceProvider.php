@@ -23,7 +23,17 @@ class MtdeSsoServiceProvider extends ServiceProvider
                 __DIR__.'/../public/pack-assets' => public_path('pack-Assets'),
             ],'assets');
 
-        
+            $this->publishes(
+                [__DIR__ . '/../config/laravellocalization.php' => config_path('laravellocalization.php'),],
+                'config'
+            );
+
+
+            $this->publishes(
+                [__DIR__ . '/../config/sso.php' => config_path('sso.php'),],
+                'config'
+            );
+    
         // $this->publishes(
         //     [__DIR__ . '/../resources/views' => resource_path('views'),],
         //     'views'

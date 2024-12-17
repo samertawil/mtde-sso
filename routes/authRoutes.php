@@ -9,7 +9,7 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 
 
-Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['web','guest'], 'as' => 'sso.'], function () {
+Route::group(['prefix' => LaravelLocalization::setLocale(), 'Middleware' => ['web','guest'], 'as' => 'sso.'], function () {
 
   Route::group(['prefix' => 'sso'], function () {
 
