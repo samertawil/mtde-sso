@@ -78,9 +78,9 @@ If you are using Laravel 11, you may register in bootstrap/app.php file in closu
 
 * Url: 
 
- </span></pre> http://servername/sso/login-form </span></pre>
+ </span></pre> http://***servername***/sso/login-form </span></pre>
 
- *  </span></pre> <h5>Finally Middleware->('ssoAuth');</h5> </span></pre>
+ *  <h3><span></pre>  Finally Middleware->('ssoAuth');  </span></pre></h3>
 
   ## License
 
