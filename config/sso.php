@@ -3,6 +3,6 @@
 
 return [
 
-    'ssoToken'=>'YWZtxm6iQp7CPmVFwLAUMt2HefbaUHnXSVrKHoJk',
+    'ssoToken'=>'',
     'redirectRoute'=>'sso.ssoHome',
 ];
